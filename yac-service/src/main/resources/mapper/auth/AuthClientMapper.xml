@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yac.service.module.auth.mapper.AuthClientMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yac.service.module.auth.model.AuthClient">
+        <id column="id" property="id" />
+        <result column="client_id" property="clientId" />
+        <result column="jwtsecret" property="jwtsecret" />
+        <result column="project_name" property="projectName" />
+        <result column="status" property="status" />
+        <result column="remarks" property="remarks" />
+    </resultMap>
+    <select id="selectByClientId" resultMap="BaseResultMap">
+        SELECT id,client_id,jwtsecret,project_name,status,remarks
+        FROM auth_client
+        WHERE client_id = #{clientId}
+        AND status = 1
+    </select>
+</mapper>

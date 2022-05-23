@@ -3,13 +3,19 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.ya</groupId>
+    <groupId>com.yac</groupId>
     <artifactId>yac-java</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0</version>
+    <version>0.1.0</version>
     <description>ya常用开发组件库</description>
+    <modules>
+        <module>yac-core</module>
+        <module>yac-example</module>
+        <module>yac-service</module>
+        <module>yac-code-generator</module>
+    </modules>
     <properties>
-        <yac.core.version>0.1.0-SNAPSHOT</yac.core.version>
+        <yac.core.version>0.1.0</yac.core.version>
         <java.version>8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -20,14 +26,65 @@
         <maven-antrun-plugin.version>3.0.0</maven-antrun-plugin.version>
     </properties>
     <dependencyManagement>
-<!--        <dependencies>-->
-<!--            <dependency>-->
-<!--                <groupId>com.yac</groupId>-->
-<!--                <artifactId>yac-starter-dependencies</artifactId>-->
-<!--                <version>${yac.core.version}</version>-->
-<!--                <type>pom</type>-->
-<!--                <scope>import</scope>-->
-<!--            </dependency>-->
-<!--        </dependencies>-->
+        <dependencies>
+            <dependency>
+                <groupId>com.yac</groupId>
+                <artifactId>yac-starter-dependencies</artifactId>
+                <version>${yac.core.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
     </dependencyManagement>
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+        </resources>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring.boot.version}</version>
+                    <configuration>
+                        <fork>true</fork>
+                        <finalName>${project.build.finalName}</finalName>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>UTF-8</encoding>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
